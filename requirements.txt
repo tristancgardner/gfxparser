@@ -1,0 +1,8 @@
+streamlit
+pandas
+beautifulsoup4
+beautifulsoup
+base64
+pandas
+re
+htmlTest_3_NP
