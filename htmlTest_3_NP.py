@@ -11,7 +11,7 @@ def process_html_full_integration(file_content):
     #soup = BeautifulSoup(content, 'html.parser')
 
     # Extract footnotes fro html using the CLASS THAT IS USED TO DENOTE A COMMENT
-    footnotes = soup.find_all('div', class_='c5')
+    footnotes = soup.find_all('div', class_='c8')
 
     # Extract the text from each comment
     comments = [footnote.get_text() for footnote in footnotes]
