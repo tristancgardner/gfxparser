@@ -3,18 +3,48 @@ import pandas as pd
 
 # OPEN & READ THE HTML SCRIPT
 def process_html_full_integration(file_content):
-    # Using BeautifulSoup to process the HTML content
-    soup = BeautifulSoup(file_content, 'html.parser')
+   
+    # For local path for html file
     """ htmlfile = "/Users/tristangardner/Documents/Scripts/AutoAssembly/HTMLParser/EXO_NetPositive.html"
     with open(htmlfile, "r", encoding="utf-8") as file:
-        content = file.read() """
-    #soup = BeautifulSoup(content, 'html.parser')
+        content = file.read() 
+    #soup = BeautifulSoup(content, 'html.parser')"""
+   
+    ###################################################################################################
+    ###################################################################################################
 
+    # Automatically find div class for comment of user's html file
+    # Parse the HTML content
+    soup = BeautifulSoup(file_content, 'html.parser')
+
+    # Find the <a> element that contains the target string
+    target_a_element = soup.find('a', href="#cmnt_ref1", id="cmnt1")
+
+    # Initialize a variable to store the class
+    comment_class = None
+
+    # If the target string is found in an <a> element, find its parent <div> element
+    if target_a_element:
+        div_containing_target = target_a_element.find_parent('div')
+        print('\n', div_containing_target, '\n')
+        
+        # Extract the class attribute value of the parent <div> element
+        if div_containing_target:
+            comment_class = div_containing_target['class'][0]
+            print('\n', comment_class, '\n')
+    
+    # The 'comment_class' variable now holds the class value as a string.
+   
     # Extract footnotes fro html using the CLASS THAT IS USED TO DENOTE A COMMENT
-    footnotes = soup.find_all('div', class_='c8')
+    footnotes = soup.find_all('div', class_=comment_class)
 
     # Extract the text from each comment
     comments = [footnote.get_text() for footnote in footnotes]
+    
+    print(comments[0], '\n')
+        
+    ###################################################################################################
+    ###################################################################################################
 
     # Keywords for categorization
     graphic_keywords = ["treatment", "source", "bullet"]
@@ -66,6 +96,9 @@ def process_html_full_integration(file_content):
     df_treatments = pd.DataFrame.from_dict(treatments_dict, orient='index').transpose()
     df_treatments
 
+    ###################################################################################################
+    ###################################################################################################
+    
     # "DEFINITION" TREATMENTS - TITLES & BODIES
     def_titles = []
     def_bodies = []
@@ -295,4 +328,5 @@ def process_html_full_integration(file_content):
 
     # WRITE MASTER CSV
     #df_master.to_csv("MasterGraphics_EXO_NP.csv", index=False)
+
 
