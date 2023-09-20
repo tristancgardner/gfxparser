@@ -1,7 +1,6 @@
 streamlit
 pandas
 beautifulsoup4
-base64
 pandas
 re
 htmlTest_3_NP
